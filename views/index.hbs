@@ -1,0 +1,14 @@
+<body>
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1>Password Strength Checks</h1>
+            <p>Now with useless authentication and validation</p>
+            {{# if user}}
+            <p>There's not much to do here.</p>
+            {{ else }}
+            <a href="/login" class="btn btn-primary"> Local Login</a>
+            <a href="/signup" class="btn btn-primary"> Local Signup</a>
+            {{/if}}
+        </div>
+    </div>
+</body>

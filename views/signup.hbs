@@ -1,0 +1,62 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
+<link rel="stylesheet" type="text/css" href="stylesheets/password.css">
+
+
+
+<div class="container">
+    <div class="col-sm-6 col-sm-offset-3">
+        <h1>Signup</h1>
+        <!-- show any messages that come back with authentication -->
+        {{# if message}}
+        <div class="alert alert-danger">
+            {{message}}
+        </div>
+        {{/if}}
+        <!-- LOGIN FORM -->
+        <form action="/signup" method="post">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="text" class="form-control" name="email">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" class="form-control" name="password">
+            </div>
+            <meter max="4" id="password-strength-meter"></meter>
+            <p id="password-strength-text"></p>
+            <button type="submit" class="btn btn-warning btn-lg">Signup</button>
+        </form>
+        <hr>
+        <p>Already have an account? <a href="/login">Login</a></p>
+        <p>Or go <a href="/">home</a>.</p>
+    </div>
+</div>
+
+<script type="text/javascript">
+const strength = {
+    0: "Poor",
+    1: "Mediocre",
+    2: "Okay",
+    3: "Good",
+    4: "Strong"
+}
+
+const password = document.getElementById('password');
+const meter = document.getElementById('password-strength-meter');
+const text = document.getElementById('password-strength-text');
+
+password.addEventListener('input', () => {
+    const val = password.value;
+    const result = zxcvbn(val);
+
+    // Update the password strength meter
+    meter.value = result.score;
+
+    // Update the text indicator
+    if (val !== "") {
+        text.innerHTML = "Strength: " + "<strong>" + strength[result.score] + "</strong>" + "<span class='feedback'> <br />" + "Guesses to crack: " + result.guesses + "<br />" + result.feedback.warning + " " + result.feedback.suggestions + "</span";
+    } else {
+        text.innerHTML = "";
+    }
+});
+</script>
