@@ -1,0 +1,17 @@
+---
+- name: Configure JavaScript development environment
+  hosts: mac_dev
+  become: yes  # If you need elevated privileges
+
+  tasks:
+    - name: Install Node.js
+      homebrew:
+        name: node
+        state: present
+
+    - name: Install Yarn
+      homebrew:
+        name: yarn
+        state: present
+
+    
